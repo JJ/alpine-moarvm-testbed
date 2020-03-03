@@ -13,4 +13,4 @@ RUN mkdir /home/raku \
     && apk add --no-cache $PKGS
 
 WORKDIR /home/raku
-ENTRYPOINT ["perl Configure.pl && make"]
+CMD ["sh", "-c", "perl", "Configure.pl", "&&", "make"]
