@@ -10,7 +10,10 @@ ENV PATH="/root/raku-install/bin:/root/raku-install/share/perl6/site/bin:/root/.
 # Basic setup, programs and init
 RUN mkdir /home/raku \
     && apk update && apk upgrade \
-    && apk add --no-cache $PKGS
+    && apk add --no-cache $PKGS \
+    && mkdir /sh && cd /sh \
+    && echo "#!/bin/sh\nperl Configure.pl && make" > entrypoint.sh \
+    && chmod +x entrypoint.sh
 
 WORKDIR /home/raku
-ENTRYPOINT ["perl", "Configure.pl", "&&", "make"]
+ENTRYPOINT ["/sh/entrypoint.sh"]
