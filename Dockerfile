@@ -12,8 +12,10 @@ RUN mkdir /home/raku \
     && apk update && apk upgrade \
     && apk add --no-cache $PKGS \
     && mkdir /sh && cd /sh \
-    && echo "perl Configure.pl && make" > entrypoint.sh \
+    && echo "/bin/sh" > entrypoint.sh \
+    && echo "perl Configure.pl && make" >> entrypoint.sh \
+    && chmod +x entrypoint.sh
 
 
 WORKDIR /home/raku
-ENTRYPOINT ["sh /sh/entrypoint.sh"]
+ENTRYPOINT ["/sh/entrypoint.sh"]
